@@ -20,7 +20,7 @@ This project was completed as part of the Web Developper training program at [Op
 
 <p align="center">
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=mongoDB,nodejs,express,figma,github,js,vscode" />
+    <img src="https://skillicons.dev/icons?i=mongodb,nodejs,express,figma,github,js,vscode" />
   </a>
 </p>
 
