@@ -3,8 +3,12 @@ const mongoose = require('mongoose');
 const bookRoutes = require('./routes/bookRoutes');
 const userRoutes = require('./routes/userRoutes');
 const path = require('path');
+require('dotenv').config();
+const DB_user = process.env.DB_user
 
-mongoose.connect('mongodb+srv://npuissesseau:Dikkiedik1@mvg.emmys8h.mongodb.net/?retryWrites=true&w=majority',
+console.log(DB_user)
+
+mongoose.connect('mongodb+srv://'+process.env.DB_user+':'+process.env.DB_password+'@'+process.env.cluster+'.mongodb.net/?retryWrites=true&w=majority',
   {  useNewUrlParser: true,
      useUnifiedTopology: true })
     .then(() => console.log('Connexion à MongoDB réussie !'))
