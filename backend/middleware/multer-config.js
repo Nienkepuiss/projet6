@@ -9,26 +9,32 @@ const MIME_TYPES = {
     'image/png': 'png',
 };
 
+// Configurer les options de stockage pour multer
 const storage = multer.diskStorage({
-    destination: (req, file, callback) => {
-        callback(null, 'images');
-    },
-    filename: (req, file, callback) => {
-        const name = file.originalname.split(' ').join('_');
-        const extension = MIME_TYPES[file.mimetype];
-        callback(null, name + Date.now() + '.' + extension);
-    }
+  // Définir la destination des fichiers téléchargés
+  destination: (req, file, callback) => {
+      callback(null, 'images');
+  },
+  // Définir le nom de fichier pour les fichiers téléchargés
+  filename: (req, file, callback) => {
+      const name = file.originalname.split(' ').join('_');
+      const extension = MIME_TYPES[file.mimetype];
+      callback(null, name + Date.now() + '.' + extension);
+  }
 });
 
+// Créer le middleware de téléchargement multer avec les options de stockage spécifiées et les restrictions de fichier
 const upload = multer({
   storage: storage,
-  limits: { fileSize: 4 * 1024 * 1024 }, // Limite de taille de 4 Mo
+  // Définir une limite de taille de fichier de 4 Mo
+  limits: { fileSize: 4 * 1024 * 1024 },
+  // Filtrer les fichiers en fonction de leur type MIME
   fileFilter: (req, file, callback) => {
-    if (MIME_TYPES[file.mimetype]) {
-      callback(null, true);
-    } else {
-      callback(new Error('Invalid file type'), false);
-    }
+      if (MIME_TYPES[file.mimetype]) {
+          callback(null, true); 
+      } else {
+          callback(new Error('Type de fichier invalide'), false); 
+      }
   }
 });
 

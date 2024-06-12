@@ -2,8 +2,17 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+const emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; //definir le format de l'email
 
+//POST SIGNUP
 exports.signup = (req, res, next) => {
+
+    //Vérification de la validité de l'email
+    if (!emailFormat.test(req.body.email)) {
+        return res.status(400).json({ error: "Format de l'e-mail non valide" });
+      }
+
+    //Logique de création d'un utilisateur
     bcrypt.hash(req.body.password, 10)
     .then(hash => {
       const user = new User({
@@ -17,6 +26,7 @@ exports.signup = (req, res, next) => {
     .catch(error => res.status(500).json({ error }));
 };
 
+//POST LOGIN
 exports.login = (req, res, next) => {
   User.findOne({ email: req.body.email })
       .then(user => {
